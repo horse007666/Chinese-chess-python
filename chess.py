@@ -40,7 +40,7 @@ def print_chess(current,now=(0,0),blink=False):
     #os.system("clear")
     for i in range(10):
         if i==5:
-            print "\n"+"-"*35
+            print("\n"+"-"*35)
         for j in range(9):
             index_i=9-i     
             character=dict[current[index_i][j]]
@@ -54,10 +54,10 @@ def print_chess(current,now=(0,0),blink=False):
                 color="30"
 
             #print "\033[%d;%sm;47 %s\033[0m|" % (bb,color,character), 
-            print "\033[%d;%sm%s\033[0m|" % (bb,color,character), 
+            print( "\033[%d;%sm%s\033[0m|" % (bb,color,character), end="" )
 
-        print "\n"+"-"*35
-    print "~"*35
+        print("\n"+"-"*35)
+    print("~"*35)
 #now=(0,0)
 #next=[(),(),(),()]
 
@@ -100,7 +100,7 @@ def moverule(current,now):
             if (k-4.5)*(i-4.5)<0 or k<0 or k>9 or l<0 or l>8 :
                 next.remove((k,l))      
         for k,l in copy.deepcopy(next):
-            if current[(i+k)/2][(j+l)/2]!=0:
+            if current[(i+k)//2][(j+l)//2]!=0:
                 next.remove((k,l))
     if index==4:
         next=[(i-2,j+1),(i-2,j-1),(i-1,j+2),(i-1,j-2),(i+2,j-1),(i+2,j+1),(i+1,j+2),(i+1,j-2)] 
@@ -108,8 +108,8 @@ def moverule(current,now):
             if k<0 or k>9 or l<0 or l>8 :
                 next.remove((k,l))
         for k,l in copy.deepcopy(next):
-            biejiao_i=(i if abs(k-i)==1 else (i+k)/2 )
-            biejiao_j=(j if abs(l-j)==1 else (j+l)/2)
+            biejiao_i=(i if abs(k-i)==1 else (i+k)//2 )
+            biejiao_j=(j if abs(l-j)==1 else (j+l)//2)
             if current[biejiao_i][biejiao_j]!=0:
                 next.remove((k,l))
 
@@ -130,7 +130,7 @@ def moverule(current,now):
                
 
     if index==7:
-        value=current[i][j]/index
+        value=current[i][j]//index
         if value*(i-4.5)<0:
             next=[(i+value,j)]
         else:
@@ -166,11 +166,13 @@ def domove(current,ismemove):
             next_step=(k_try,l_try)
     (k,l)=next_step
     os.system("clear")
+    print("\033[H\033[J",end='')
     print_chess(current,(i,j),True)
     current[k][l]=current[i][j]
     current[i][j]=0
     time.sleep(3)
     os.system("clear")
+    print("\033[H\033[J",end='')
     print_chess(current)
     time.sleep(3)
     return
@@ -188,9 +190,9 @@ def gameover(current):
                 isover+=1
                 blackwin=1 
     if isover!=2 and redwin:
-        print "RED Wins!!!!"
+        print("RED Wins!!!!")
     if isover!=2 and blackwin:
-        print "BLACK Wins!!!"
+        print("BLACK Wins!!!")
     return isover!=2 
 
 init(current)
